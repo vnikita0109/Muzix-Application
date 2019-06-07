@@ -61,7 +61,7 @@ public class TrackController {
         return responseEntity;
     }
 
-    @GetMapping("find/{id}")
+    /*@GetMapping("find/{id}")
     @ApiOperation("Get all the tracks here")
     @ApiResponses(value = {@ApiResponse(code=200,message ="OK",response = Track.class)})
     public ResponseEntity<?>findTrack(@PathVariable int id) throws TrackNotFoundException {
@@ -70,7 +70,7 @@ public class TrackController {
             responseEntity=new ResponseEntity<String>("Track found !",HttpStatus.FOUND);
 
         return responseEntity;
-    }
+    }*/
     @DeleteMapping("delete/{id}")
     @ApiOperation("Get all the tracks here")
     @ApiResponses(value = {@ApiResponse(code=200,message ="OK",response = Track.class)})

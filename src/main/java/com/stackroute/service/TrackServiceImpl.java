@@ -13,6 +13,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @CacheConfig(cacheNames = "track")
 @Service
@@ -72,7 +73,7 @@ public class TrackServiceImpl implements TrackService {
         Track foundTrack=null;
 
         if (trackRepository.existsById(id)){
-            foundTrack=trackRepository.getOne(id);
+            foundTrack=trackRepository.findById(11).get();
         }
         else {
             throw new TrackNotFoundException(environment.getProperty("String.exception1"));
@@ -82,17 +83,16 @@ public class TrackServiceImpl implements TrackService {
 
     @CacheEvict(allEntries = true)
     @Override
-    public Track deleteTrack(int id) throws TrackNotFoundException {
-        Track existedTrack=null;
-
-        if (trackRepository.existsById(id)){
+    public List<Track> deleteTrack(int id) throws TrackNotFoundException {
+        Optional optional=trackRepository.findById(id);
+        if (optional.isPresent()){
             trackRepository.deleteById(id);
         }
         else
         {
             throw new TrackNotFoundException(environment.getProperty("String.exception1"));
         }
-        return existedTrack;     //returning the object deleted with null values
+        return trackRepository.findAll();
     }
 
     //Updates the comments part of track

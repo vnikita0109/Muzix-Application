@@ -25,7 +25,7 @@ public class TrackServiceImpl2 implements TrackService{
     }
 
     @Override
-    public Track deleteTrack(int id) throws TrackNotFoundException {
+    public List<Track> deleteTrack(int id) throws TrackNotFoundException {
         return null;
     }
 

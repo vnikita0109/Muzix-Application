@@ -92,7 +92,7 @@ public class TrackControllerTest {
 
     @Test
     public void testDeleteTrack() throws Exception{
-        when(trackService.deleteTrack(11)).thenReturn(track);
+        when(trackService.deleteTrack(11)).thenReturn(null);
         //doThrow(new TrackNotFoundException("Track not found")).when(trackService.deleteTrack(any())).getId();
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/delete/11")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))

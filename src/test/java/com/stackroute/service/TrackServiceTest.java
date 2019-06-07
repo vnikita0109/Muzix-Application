@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -29,6 +30,8 @@ public class TrackServiceTest {
     @InjectMocks
     private TrackServiceImpl trackServiceImpl;
     List<Track> list=null;
+
+    private Optional<Track> optional;
 
     @Before
     public void setUp(){
@@ -65,15 +68,16 @@ public class TrackServiceTest {
     @Test
     public void deleteTrackSuccess()throws TrackNotFoundException {
         when(trackRepository.existsById(track.getId())).thenReturn(true);
-        Track status=trackServiceImpl.deleteTrack(track.getId());
+        List<Track> status=trackServiceImpl.deleteTrack(track.getId());
         Assert.assertEquals(null,status);
     }
 
-    @Test(expected = TrackNotFoundException.class)
-    public void deleteTrackFailure() throws TrackNotFoundException {
-        when(trackRepository.existsById(track.getId())).thenReturn(false);
-        Track status=trackServiceImpl.deleteTrack(track.getId());
-        Assert.assertNotSame(null,status);
+    @Test()
+    public void deleteTrackTestFailure() throws TrackNotFoundException {
+        when(trackRepository.findById(11)).thenReturn(optional);
+        trackServiceImpl.deleteTrack(track.getId());
+        List<Track> trackList = trackServiceImpl.getAllTracks();
+        Assert.assertNotSame(true,trackList.contains(track));
     }
     @Test
     public void testFindByIdTrack() throws TrackNotFoundException {
